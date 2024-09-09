@@ -1,17 +1,27 @@
 ---
 import Card from "./Card/index.astro";
 import Pulse from "./Pulse.astro";
+import img from '../../src/lib/bbu.png';
+
+const image = [
+  { img: img },
+]
 ---
 
-<Card colSpan="md:col-span-1" rowSpan="md:row-span-2">
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-2" img={image[0].img.src}, opac="0.3", 
+cubic="transform 20s cubic-bezier(0,1.95,.6,.96)", orig="center left", 
+transformation="scale(1.5) rotate(-30deg) translateX(-30%) translateY(0%)", 
+scl="scale(1.5) rotate(-30deg)", backpos="center right 125%">
+
   <div class="flex justify-between w-full items-start mb-2">
     <div class="flex flex-col">
-      <h2>Now</h2>
+      <h2 class="text-xl font-bold m-0 z-20">Current Project</h2>
+      <h2>Bimbo Bakeries</h2>
       <a href="https://sive.rs/nowff" target="_blank">
-        <span class="text-xs text-gray-500 cursor-pointer">what's that ?</span>
+        <!--<span class="text-xs text-gray-500 cursor-pointer">what's that ?</span> -->
       </a>
     </div>
     <Pulse />
   </div>
-  <p class="text-xs">Currently working as freelancer</p>
+  <p class="text-xs">Oracle WMS</p>
 </Card>
