@@ -1,0 +1,95 @@
+---
+import { Icon } from "astro-icon/components";
+import Content from "./Content.astro";
+
+interface Props {
+  title?: string;
+  body?: string;
+  colSpan?: string;
+  rowSpan?: string;
+  href?: string;
+  colorText?: string;
+  height?: string;
+  width?: string;
+  img?: string;
+  opac?: string;
+  cubic?: string;
+  orig?: string;
+  transformation?: string;
+  scl?: string;
+  backpos?: string;
+}
+
+const { title, body, colSpan, rowSpan, href, colorText, height, img, opac, cubic, orig, transformation, scl, backpos } = Astro.props;
+---
+
+<style define:vars={{ image: `url("${img}")`, opac: opac, cubic: cubic, orig: orig, transformation: transformation, scl: scl, backpos: backpos }}>
+
+  .card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::after {
+    content: '';
+    background-image: var(--image);
+    background-size: cover;
+    background-position: var(--backpos);
+    position: absolute;
+    bottom:0;
+    left:0;
+    right:0;
+    height:50%;
+    opacity: var(--opac);
+
+  }
+
+  .overlay {
+    position: absolute;
+    bottom: -100%; /* Start hidden below the div */
+    left: 0;
+    right: 0;
+    height: 50%; /* The height of the overlay */
+    background-color: rgba(0, 0, 0, 1); /* Black background with transparency */
+    transition: bottom 0.5s ease; /* Smooth transition */
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+  .card:hover .overlay {
+    bottom: 0;
+  }
+
+  .card:hover::after {
+    opacity: 0.3;
+  }
+</style>
+
+<div
+  class={`card h-max sm:h-auto group overflow-hidden transform-y-[-40%] bg-darkslate-500 shadow-lg rounded-lg p-6 border border-white hover:border-primary-500 align-start flex-none ${
+    height || "h-full"
+  } justify-start relative transform perspective-1200 w-full transition duration-75 ease-in-out col-span-1 ${
+    colSpan || "md:col-span-2"
+  } ${rowSpan || ""}`}
+>
+<div class="overlay text-xl font-semibold">Read More</div>
+  {
+    href ? (
+      <a href={href} target="_blank" class={`h-full w-full ${colorText || " "}`}>
+        <Icon
+          name="ri:arrow-right-up-line"
+          class="h-6 float-right group-hover:text-primary-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ease-in-out duration-100 z-20"
+        />
+        <Content title={title} body={body}>
+          <slot />
+        </Content>
+      </a>
+    ) : (
+      <Content title={title} body={body}>
+        <slot />
+      </Content>
+    )
+  }
+</div>
